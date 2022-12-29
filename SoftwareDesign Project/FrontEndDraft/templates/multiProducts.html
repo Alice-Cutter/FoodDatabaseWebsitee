@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-*" />
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename='front_end.css') }}"><title>MultipleProductsInfo</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  
+        </script>  
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  
+        </script>  
+        
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+            rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">      
+    </head>
+    
+    
+    <body>
+        <header class="header">
+            <div class="container">
+                <div class="productName">
+                    <h1>{{ products }}</h1>
+                </div>
+            </div>
+        </header>
+        <header class="header2">
+            <div class="container">
+                <h2>{{ brand }}</h2>
+            </div>
+        </header>
+        <nav class="navbar"> <!-- THE FOLLOWING CODE WAS COPIED FROM INDEX.HTML-->
+            <div class="container">
+                <ul class="nav">
+                    <li>
+                    <a href="/">Home</a>
+                    </li>
+                    <li>
+                    <a href="/aboutPage">About</a>
+                    </li>
+                    
+                    <li>
+                    <a href="https://fdc.nal.usda.gov/download-datasets.html" target="_blank">USDA Data Source</a>
+                    </li>
+                </ul>
+                <form action="multiProducts" method="post">
+                    <label for="product">Search for a product:</label> 
+                    <input type="text" id="tags" name="product" class="ui-autocomplete-input">
+                    <script>
+                        $( function() {
+                            var availableTags = [
+                                {% for product in rows %}
+                                    "{{product}}",
+                                {% endfor %}
+                            ];
+                            $( "#tags" ).autocomplete({
+                                source: availableTags
+                            });
+                        } );
+                    </script>
+                
+                    <input type="submit" value="Submit">
+                </form>
+
+            </div>
+        </nav>
+        <div class="brandbox">
+            <p>Select the brand you would like the view.</p>
+            <form action="productInfo" method="post">
+                <label for="brands">Choose a brand</label>
+                <select name="brandChoice">
+
+                    {% for brand in brands: %}
+                    <option value="{{brand}}">{{brand}}</option>
+                    {% endfor %}
+                    
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="footer">
+            <footer>
+                <p>&copy; Morgan Graves & Alice Cutter, 2022</p>
+            </footer>
+    </body>
